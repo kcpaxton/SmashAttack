@@ -3,10 +3,12 @@ package trunine.smashattack;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,6 +35,29 @@ public class Frag_FighterSelect extends ListFragment {
         setListAdapter(new Adapter_FighterSelect(getActivity(), listOfFighterIcons));
         getListView().setDivider(null);
         getListView().setDividerHeight(0);
+
+        //******************************************************************************************
+        // Set the OnItemClickListener
+        //******************************************************************************************
+        getListView().setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        Frag_FighterDisplay fragFighterDisplay = new Frag_FighterDisplay();
+
+                        Model_Icon testFighter = (Model_Icon) parent.getItemAtPosition(position); // Gets the id of the selected fighter
+
+                        fragFighterDisplay.getFighterData(testFighter.getFighterId());
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+                        ft.addToBackStack("FighterSelectFragment");
+                        ft.replace(R.id.MyFrameLayout, fragFighterDisplay, "DisplayFighterFragment");
+                        ft.commit();
+
+                    }
+                });
+        //******************************************************************************************
     }
 
     //******************************************************************************************
@@ -46,7 +71,6 @@ public class Frag_FighterSelect extends ListFragment {
 
                 try {
                     ObjectMapper objectMapper = new ObjectMapper();
-                   // objectMapper.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, true);
                     URL jsonUrl = new URL(Globals.iconUrl);
                     listOfFighterIcons = Arrays.asList(objectMapper.readValue(jsonUrl, Model_Icon[].class));//Gathers the icons from json to a list of Model_Icon objects
                 } catch (Exception e) {
