@@ -68,21 +68,21 @@ public class Frag_FighterDisplay extends Fragment {
         //****************************************************************************************************************
         // setOnChildClickListener listener for child row click
         //****************************************************************************************************************
-//        displayFighterExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-//            @Override
-//            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-//                Frag_DisplayHitboxes fragDisplayHitboxes = new Frag_DisplayHitboxes();
-//
-//                fragDisplayHitboxes.getData(fighterGroupList.get(groupPosition), groupPosition,childPosition);
-//
-//                FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                ft.addToBackStack("DisplayFighterFragment");
-//                ft.replace(R.id.MyFrameLayout, fragDisplayHitboxes, "DisplayHitboxesFragment");
-//                ft.commit();
-//                return false;
-//
-//            }
-//        });
+        displayFighterExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                Frag_DisplayHitboxes fragDisplayHitboxes = new Frag_DisplayHitboxes();
+
+                fragDisplayHitboxes.getData(fighterGroupList.get(groupPosition), groupPosition,childPosition);
+
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.addToBackStack("DisplayFighterFragment");
+                ft.replace(R.id.MyFrameLayout, fragDisplayHitboxes, "DisplayHitboxesFragment");
+                ft.commit();
+                return false;
+
+            }
+        });
         //***************************************************************************************************************
 
         //******************************************************************************************************
