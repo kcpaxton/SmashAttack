@@ -53,7 +53,7 @@ public class Frag_FighterDisplay extends Fragment {
         //********************************************************************************************
 
 
-        //  displayAttributes(); //sets the attributes for the selected character
+        displayAttributes(); //sets the attributes for the selected character
         //expandAll();
         // initialize display data into the expandable list
         fighterGroupList.clear();
@@ -253,6 +253,7 @@ public class Frag_FighterDisplay extends Fragment {
 
         thread.start();
         try {
+
             thread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();

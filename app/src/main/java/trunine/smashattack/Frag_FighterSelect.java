@@ -6,9 +6,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,6 +27,7 @@ public class Frag_FighterSelect extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         getFighterIcons();
+
         return inflater.inflate(R.layout.frag_fighter_select, container, false);
     }
 
@@ -35,6 +38,7 @@ public class Frag_FighterSelect extends ListFragment {
         setListAdapter(new Adapter_FighterSelect(getActivity(), listOfFighterIcons));
         getListView().setDivider(null);
         getListView().setDividerHeight(0);
+        getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
         //******************************************************************************************
         // Set the OnItemClickListener
@@ -43,6 +47,7 @@ public class Frag_FighterSelect extends ListFragment {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        getListView().setCacheColorHint(getResources().getColor(R.color.colorBlack));
 
                         Frag_FighterDisplay fragFighterDisplay = new Frag_FighterDisplay();
 
@@ -56,7 +61,8 @@ public class Frag_FighterSelect extends ListFragment {
                         ft.commit();
 
                     }
-                });
+                }
+        );
         //******************************************************************************************
     }
 
