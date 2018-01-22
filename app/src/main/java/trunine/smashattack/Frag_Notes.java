@@ -22,15 +22,20 @@ public class Frag_Notes extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        FloatingActionButton addNoteButton = getActivity().findViewById(R.id.createNoteFab);
+
         final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-        FloatingActionButton addNoteButton = (FloatingActionButton) getActivity().findViewById(R.id.createNoteFab);
+
+        final Fragment fragLeft = new Frag_Notes_Create_Select();
+        final Fragment fragRight = new Frag_Notes_Create_Select();
 
         addNoteButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                Fragment frag = new Frag_Notes_Create();
-                ft.replace(R.id.MyFrameLayout, frag);
+
+                ft.add(R.id.frag_left, fragLeft);
+                ft.add(R.id.frag_right, fragRight);
                 ft.commit();
             }
         });
