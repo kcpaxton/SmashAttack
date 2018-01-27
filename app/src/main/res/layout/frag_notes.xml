@@ -15,25 +15,27 @@
         android:layout_marginLeft="20dp" />
 
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/createNoteFab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentStart="false"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="20dp"
-        android:clickable="true"
-        android:focusable="true"
-        app:elevation="0dp"
-        app:srcCompat="@android:drawable/ic_input_add" />
-
     <FrameLayout
         android:id="@+id/frag_right"
         android:layout_width="100dp"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp" />
+
+    <FrameLayout
+        android:id="@+id/listOfNotesLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true" />
+
+
+    <Button
+        android:id="@+id/createNoteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="22dp"
+        android:text="Create Note" />
+
 </RelativeLayout>
