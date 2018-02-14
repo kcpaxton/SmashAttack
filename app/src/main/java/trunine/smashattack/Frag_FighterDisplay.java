@@ -45,11 +45,11 @@ public class Frag_FighterDisplay extends Fragment {
         //********************************************************************************************
         //Sets the collapsing toolbar as the toolbar
         //********************************************************************************************
-        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.anim_toolbar);
+        /*Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.anim_toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         if(((AppCompatActivity)getActivity()).getSupportActionBar() != null){
             ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        }*/
         //********************************************************************************************
 
 
@@ -76,8 +76,9 @@ public class Frag_FighterDisplay extends Fragment {
                 fragDisplayHitboxes.getData(fighterGroupList.get(groupPosition), groupPosition,childPosition);
 
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.addToBackStack("DisplayFighterFragment");
+                //ft.addToBackStack("DisplayFighterFragment");
                 ft.replace(R.id.MyFrameLayout, fragDisplayHitboxes, "DisplayHitboxesFragment");
+                ft.addToBackStack(null);
                 ft.commit();
                 return false;
 
@@ -114,8 +115,8 @@ public class Frag_FighterDisplay extends Fragment {
         super.onResume();
         //ProgressBar progressBar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
         // progressBar.setVisibility(View.INVISIBLE);
-        Toolbar activityToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        activityToolbar.setVisibility(View.GONE);
+      //  Toolbar activityToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+      //  activityToolbar.setVisibility(View.GONE);
 
     }
     //******************************************************************************************
@@ -127,14 +128,14 @@ public class Frag_FighterDisplay extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        Toolbar activityToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+      //  Toolbar activityToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
 
-        activityToolbar.setVisibility(View.VISIBLE);
+       // activityToolbar.setVisibility(View.VISIBLE);
 
     }
 
     //******************************************************************************************
-    @Override
+   /* @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             getActivity().onBackPressed();
@@ -142,7 +143,7 @@ public class Frag_FighterDisplay extends Fragment {
             return true;
         }
         return false;
-    }
+    }*/
 
 
     //*****************************************************************************************************************************************************

@@ -32,7 +32,7 @@ public class Frag_FighterSelect extends ListFragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         setListAdapter(new Adapter_FighterSelect(getActivity(), listOfFighterIcons));
@@ -56,8 +56,8 @@ public class Frag_FighterSelect extends ListFragment {
                         fragFighterDisplay.getFighterData(testFighter.getFighterId());
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
 
-                        ft.addToBackStack("FighterSelectFragment");
                         ft.replace(R.id.MyFrameLayout, fragFighterDisplay, "DisplayFighterFragment");
+                        ft.addToBackStack(null);
                         ft.commit();
 
                     }

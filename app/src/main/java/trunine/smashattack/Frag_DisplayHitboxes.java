@@ -39,8 +39,8 @@ public class Frag_DisplayHitboxes extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+       // Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        //((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         if(((AppCompatActivity)getActivity()).getSupportActionBar() != null) {
             ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
