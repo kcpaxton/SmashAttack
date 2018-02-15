@@ -1,5 +1,6 @@
 package trunine.smashattack;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -13,13 +14,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener {
 
     private DrawerLayout drawer;
     private Toolbar toolbar;
-    private ActionBarDrawerToggle drawerToggle;
+    private ActionBarDrawerToggle mDrawerToggle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,9 +34,9 @@ public class MainActivity extends AppCompatActivity
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        drawerToggle = new ActionBarDrawerToggle(
+        mDrawerToggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(drawerToggle);
+        drawer.addDrawerListener(mDrawerToggle);
         //drawerToggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -51,7 +54,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        drawerToggle.syncState();
+        mDrawerToggle.syncState();
     }
 
     @Override
@@ -60,7 +63,8 @@ public class MainActivity extends AppCompatActivity
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }
+        else {
             super.onBackPressed();
         }
 
@@ -83,7 +87,7 @@ public class MainActivity extends AppCompatActivity
 
         switch (item.getItemId()) {
             case android.R.id.home: //i think this could be reason why drawer keeps opening?
-                drawerToggle.syncState();
+                mDrawerToggle.syncState();
                 getSupportFragmentManager().popBackStack();
                 return true;
         }
@@ -104,9 +108,11 @@ public class MainActivity extends AppCompatActivity
             ft.replace(R.id.MyFrameLayout, frag);
             ft.commit();
         } else if (id == R.id.notes) {
-            Fragment frag = new Frag_Notes();
-            ft.replace(R.id.MyFrameLayout, frag);
-            ft.commit();
+            Intent notesIntent = new Intent(this, Notes.class);
+            startActivity(notesIntent);
+            //Fragment frag = new Frag_Notes();
+           // ft.replace(R.id.MyFrameLayout, frag);
+           // ft.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -116,11 +122,26 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackStackChanged() {
-        int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
-        if(backStackEntryCount > 0){
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }else{
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true); // show back button
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            });
+        } else {
+            //show hamburger
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            mDrawerToggle.syncState();
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    drawer.openDrawer(GravityCompat.START);
+                }
+            });
         }
     }
+
+
 }

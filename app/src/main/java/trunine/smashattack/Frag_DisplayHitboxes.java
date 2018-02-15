@@ -150,8 +150,8 @@ public class Frag_DisplayHitboxes extends Fragment {
         super.onResume();
         //ProgressBar progressBar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
         // progressBar.setVisibility(View.INVISIBLE);
-        Toolbar activityToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        activityToolbar.setVisibility(View.GONE);
+        //Toolbar activityToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        //activityToolbar.setVisibility(View.GONE);
 
     }
     //******************************************************************************************
@@ -163,9 +163,9 @@ public class Frag_DisplayHitboxes extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        Toolbar activityToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        //Toolbar activityToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
 
-        activityToolbar.setVisibility(View.VISIBLE);
+       // activityToolbar.setVisibility(View.VISIBLE);
 
     }
 

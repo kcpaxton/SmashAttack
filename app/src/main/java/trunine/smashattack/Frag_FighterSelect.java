@@ -66,6 +66,13 @@ public class Frag_FighterSelect extends ListFragment {
         //******************************************************************************************
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle("Fighter Select");
+
+    }
+
     //******************************************************************************************
     // Retrieve the Icon data from http://matthewgollaher.azurewebsites.net/wiiusmash4/card
     //******************************************************************************************

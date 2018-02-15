@@ -11,4 +11,6 @@
     <string name="are_you_sure">are you sure?</string>
     <string name="create_note">Create Note</string>
     <string name="create_note_template">Create Template</string>
+    <string name="note_creation">Note Creation</string>
+    <string name="title_activity_notes">Notes</string>
 </resources>

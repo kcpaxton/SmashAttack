@@ -40,16 +40,15 @@ public class Frag_FighterDisplay extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        getActivity().setTitle(fighterData.getName());
         super.onViewCreated(view, savedInstanceState);
         //********************************************************************************************
         //Sets the collapsing toolbar as the toolbar
         //********************************************************************************************
-        /*Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.anim_toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.anim_toolbar);
+       // ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         if(((AppCompatActivity)getActivity()).getSupportActionBar() != null){
             ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }*/
+        }
         //********************************************************************************************
 
 
@@ -113,11 +112,11 @@ public class Frag_FighterDisplay extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        getActivity().setTitle(fighterData.getName());
         //ProgressBar progressBar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
         // progressBar.setVisibility(View.INVISIBLE);
-      //  Toolbar activityToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-      //  activityToolbar.setVisibility(View.GONE);
-
+        //Toolbar activityToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+       // activityToolbar.setVisibility(View.GONE);
     }
     //******************************************************************************************
 
@@ -128,9 +127,9 @@ public class Frag_FighterDisplay extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-      //  Toolbar activityToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        Toolbar activityToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
 
-       // activityToolbar.setVisibility(View.VISIBLE);
+        activityToolbar.setVisibility(View.VISIBLE);
 
     }
 
