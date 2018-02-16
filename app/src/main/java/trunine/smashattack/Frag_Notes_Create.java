@@ -20,8 +20,9 @@ import android.widget.ImageButton;
 
 public class Frag_Notes_Create extends Fragment {
 
+    public static String templateData = "";
     private String action;
-    private EditText editor;
+    private static EditText editor;
 
     @Nullable
     @Override
@@ -35,13 +36,11 @@ public class Frag_Notes_Create extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         editor = getActivity().findViewById(R.id.editText);
-
-        Intent intent = getActivity().getIntent();
-        Uri uri = intent.getParcelableExtra(NotesProvider.CONTENT_ITEM_TYPE);
-
-        if(uri == null){
-            action = Intent.ACTION_INSERT;
+        if(templateData != null){
+            editor.setText(templateData);
+            templateData = null;
         }
+
     }
 
     @Override
@@ -55,6 +54,12 @@ public class Frag_Notes_Create extends Fragment {
         super.onStop();
 
         finishEditing();
+
+    }
+
+    public static void getTemplate(String data)
+    {
+        templateData = data;
 
     }
 

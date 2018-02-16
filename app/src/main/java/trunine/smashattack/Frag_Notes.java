@@ -73,7 +73,7 @@ public class Frag_Notes extends Fragment implements LoaderManager.LoaderCallback
 
         getLoaderManager().initLoader(0, null, this);
 
-       // final Button createNoteTemplateButton = getActivity().findViewById(R.id.createNoteTemplateButton);
+        final FloatingActionButton createNoteTemplateButton = getActivity().findViewById(R.id.createNoteTemplateButton);
         final FloatingActionButton createNoteButton = getActivity().findViewById(R.id.createNoteButton);
 
         //final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
@@ -82,29 +82,34 @@ public class Frag_Notes extends Fragment implements LoaderManager.LoaderCallback
         final Fragment fragRight = new Frag_Notes_Create_Select();
         final Fragment fragCreateNote = new Frag_Notes_Create();
 
-        /*createNoteTemplateButton.setOnClickListener(new View.OnClickListener() {
+        createNoteTemplateButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                /*if(selected)
-                {
-                    //remove fragLeft and fragRight and navigate to Frag_Notes_Create
-                    ft2.remove(fragLeft);
-                    ft2.remove(fragRight);
-                    ft2.replace(R.id.MyFrameLayout, fragCreateNote);
-                    ft2.commit();
-                    selected = false;
-                }
-                else
-                {
-                    ft.add(R.id.frag_left, fragLeft);
-                    ft.add(R.id.frag_right, fragRight);
-                    ft.commit();
-                    createNoteButton.setText("Next");
-                    selected = true;
-                }
+                String editTextTemplate =
+                        "**Neutral**\n" +
+                        "\n" +
+                        "\n" +
+                        "**Stages**\n" +
+                        " - Go to\n" +
+                        "\n" +
+                        " - Ban\n" +
+                        "\n" +
+                        "\n" +
+                        "**To Remember**\n" +
+                        "\n" +
+                        "\n" +
+                        "**Test**\n";
+                Frag_Notes_Create frag_notes_create = new Frag_Notes_Create();
+                Frag_Notes_Create.getTemplate(editTextTemplate);
+                //remove fragLeft and fragRight and navigate to Frag_Notes_Create
+                ft2.remove(fragLeft);
+                ft2.remove(fragRight);
+                ft2.replace(R.id.MyFrameLayout, fragCreateNote);
+                ft2.addToBackStack(null);
+                ft2.commit();
             }
-        });*/
+        });
 
         createNoteButton.setOnClickListener(new View.OnClickListener(){
 
