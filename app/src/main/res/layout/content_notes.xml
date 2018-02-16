@@ -12,9 +12,10 @@
 
     <ListView
         android:id="@+id/android:list"
-        android:background="@color/colorWhite"
+        android:background="@color/colorPrimarySecondary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
 
 
     <FrameLayout

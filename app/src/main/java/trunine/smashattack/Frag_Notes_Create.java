@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -52,8 +53,9 @@ public class Frag_Notes_Create extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        //MainActivity.fragmentNoteCreateBool=false;
+
         finishEditing();
+
     }
 
     public void finishEditing(){
@@ -67,8 +69,6 @@ public class Frag_Notes_Create extends Fragment {
         {
             getActivity().setResult(Activity.RESULT_CANCELED);
         }
-
-       // getActivity().finish();
 
     }
 

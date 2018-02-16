@@ -15,6 +15,7 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -28,12 +29,15 @@ public class Notes extends AppCompatActivity implements LoaderManager.LoaderCall
     boolean selected =false;
     private Adapter_NotesCursor cursorAdapter;
     private static final int EDITOR_REQUEST_CODE = 1001;
-
+    private Toolbar toolbar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         cursorAdapter = new Adapter_NotesCursor(this, null, 0);
 

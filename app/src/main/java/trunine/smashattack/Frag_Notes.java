@@ -40,6 +40,12 @@ public class Frag_Notes extends Fragment implements LoaderManager.LoaderCallback
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        Fragment frg = null;
+        frg = getFragmentManager().findFragmentByTag("Frag_Notes");
+        final FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.detach(frg);
+        fragmentTransaction.attach(frg);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -70,7 +76,7 @@ public class Frag_Notes extends Fragment implements LoaderManager.LoaderCallback
        // final Button createNoteTemplateButton = getActivity().findViewById(R.id.createNoteTemplateButton);
         final FloatingActionButton createNoteButton = getActivity().findViewById(R.id.createNoteButton);
 
-        final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        //final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         final FragmentTransaction ft2 = getActivity().getSupportFragmentManager().beginTransaction();
         final Fragment fragLeft = new Frag_Notes_Create_Select();
         final Fragment fragRight = new Frag_Notes_Create_Select();
@@ -108,7 +114,7 @@ public class Frag_Notes extends Fragment implements LoaderManager.LoaderCallback
                 //remove fragLeft and fragRight and navigate to Frag_Notes_Create
                 ft2.remove(fragLeft);
                 ft2.remove(fragRight);
-                ft2.replace(R.id.MyFrameLayout, fragCreateNote);
+                ft2.add(R.id.MyFrameLayout, fragCreateNote);
                 ft2.addToBackStack(null);
                 ft2.commit();
 
@@ -137,6 +143,7 @@ public class Frag_Notes extends Fragment implements LoaderManager.LoaderCallback
     @Override
     public void onResume() {
         super.onResume();
+
         getActivity().setTitle("Notes");
 
     }

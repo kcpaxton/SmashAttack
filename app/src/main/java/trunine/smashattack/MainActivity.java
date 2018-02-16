@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
+
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         mDrawerToggle = new ActionBarDrawerToggle(
@@ -108,11 +109,11 @@ public class MainActivity extends AppCompatActivity
             ft.replace(R.id.MyFrameLayout, frag);
             ft.commit();
         } else if (id == R.id.notes) {
-            Intent notesIntent = new Intent(this, Notes.class);
-            startActivity(notesIntent);
-            //Fragment frag = new Frag_Notes();
-           // ft.replace(R.id.MyFrameLayout, frag);
-           // ft.commit();
+            //Intent notesIntent = new Intent(this, Notes.class);
+            //startActivity(notesIntent);
+            Fragment frag = new Frag_Notes();
+            ft.replace(R.id.MyFrameLayout, frag, "Frag_Notes");
+            ft.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -142,6 +143,5 @@ public class MainActivity extends AppCompatActivity
             });
         }
     }
-
 
 }
