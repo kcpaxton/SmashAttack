@@ -21,6 +21,7 @@ import java.util.List;
 
 public class Frag_DisplayHitboxes extends Fragment {
 
+    Model_Fighter fighterData = new Model_Fighter();
     DisplayFighterGroup fighterGroupInfo;
     List<String> frameUrls;
     int groupPosition;
@@ -36,15 +37,19 @@ public class Frag_DisplayHitboxes extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //********************************************************************************************
+        //Sets the collapsing toolbar as the toolbar
+        //********************************************************************************************
+        //((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        //********************************************************************************************
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-       // Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        //((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-
-        if(((AppCompatActivity)getActivity()).getSupportActionBar() != null) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
 
 
         final ImageView hitboxes = (ImageView) view.findViewById(R.id.imageView_hitboxes);
@@ -135,11 +140,12 @@ public class Frag_DisplayHitboxes extends Fragment {
     }
 
 
-    public void getData(DisplayFighterGroup fighterGroupInfo, int groupPosition, int childPosition)
+    public void getData(/*Model_Fighter fighterData,*/ DisplayFighterGroup fighterGroupInfo, int groupPosition, int childPosition)
     {
         this.fighterGroupInfo = fighterGroupInfo;
         this.groupPosition = groupPosition;
         this.childPosition = childPosition;
+        //this.fighterData = fighterData;
     }
 
     //******************************************************************************************
@@ -148,7 +154,8 @@ public class Frag_DisplayHitboxes extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //ProgressBar progressBar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
+        getActivity().setTitle( fighterGroupInfo.getAttacks().get(childPosition).getName());
+        //ProgressBar progressBar = (ProgressBar) getActivity().findViewBfighterGroupInfo.yId(R.id.progressbar);
         // progressBar.setVisibility(View.INVISIBLE);
         //Toolbar activityToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         //activityToolbar.setVisibility(View.GONE);
@@ -160,14 +167,14 @@ public class Frag_DisplayHitboxes extends Fragment {
     ///******************************************************************************************
     // Sets the activity's toolbar to visible
     //*******************************************************************************************
-    @Override
+   /* @Override
     public void onStop() {
         super.onStop();
         //Toolbar activityToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
 
        // activityToolbar.setVisibility(View.VISIBLE);
 
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

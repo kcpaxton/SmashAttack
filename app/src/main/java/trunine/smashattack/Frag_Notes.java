@@ -114,7 +114,7 @@ public class Frag_Notes extends Fragment implements LoaderManager.LoaderCallback
                 //remove fragLeft and fragRight and navigate to Frag_Notes_Create
                 ft2.remove(fragLeft);
                 ft2.remove(fragRight);
-                ft2.add(R.id.MyFrameLayout, fragCreateNote);
+                ft2.replace(R.id.MyFrameLayout, fragCreateNote);
                 ft2.addToBackStack(null);
                 ft2.commit();
 
@@ -145,6 +145,10 @@ public class Frag_Notes extends Fragment implements LoaderManager.LoaderCallback
         super.onResume();
 
         getActivity().setTitle("Notes");
+        //add if here
+        //if(NotesProvider.CONTENT_URI != NULL{
+            restartLoader();
+        //}
 
     }
 
@@ -184,7 +188,7 @@ public class Frag_Notes extends Fragment implements LoaderManager.LoaderCallback
 
     public void insertNewNote(String noteText){
         insertNote(noteText);
-        restartLoader();
+        //restartLoader();
     }
 
     public void restartLoader() {

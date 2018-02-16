@@ -72,7 +72,7 @@ public class Frag_FighterDisplay extends Fragment {
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 Frag_DisplayHitboxes fragDisplayHitboxes = new Frag_DisplayHitboxes();
 
-                fragDisplayHitboxes.getData(fighterGroupList.get(groupPosition), groupPosition,childPosition);
+                fragDisplayHitboxes.getData(/*fighterData, */fighterGroupList.get(groupPosition), groupPosition,childPosition);
 
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 //ft.addToBackStack("DisplayFighterFragment");
