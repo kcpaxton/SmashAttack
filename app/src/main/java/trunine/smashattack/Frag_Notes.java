@@ -1,6 +1,7 @@
 package trunine.smashattack;
 
 import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -78,9 +80,21 @@ public class Frag_Notes extends Fragment implements LoaderManager.LoaderCallback
 
         //final FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         final FragmentTransaction ft2 = getActivity().getSupportFragmentManager().beginTransaction();
-        final Fragment fragLeft = new Frag_Notes_Create_Select();
-        final Fragment fragRight = new Frag_Notes_Create_Select();
         final Fragment fragCreateNote = new Frag_Notes_Create();
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                ft2.replace(R.id.MyFrameLayout, fragCreateNote);
+                ft2.addToBackStack(null);
+                ft2.commit();
+                Uri uri = Uri.parse(NotesProvider.CONTENT_URI + "/" + id);
+                Bundle bundle = new Bundle();
+                bundle.putString(NotesProvider.CONTENT_ITEM_TYPE, uri.toString());
+                fragCreateNote.setArguments(bundle);
+            }
+        });
+
 
         createNoteTemplateButton.setOnClickListener(new View.OnClickListener() {
 
@@ -100,11 +114,9 @@ public class Frag_Notes extends Fragment implements LoaderManager.LoaderCallback
                         "\n" +
                         "\n" +
                         "**Test**\n";
+
                 Frag_Notes_Create frag_notes_create = new Frag_Notes_Create();
                 Frag_Notes_Create.getTemplate(editTextTemplate);
-                //remove fragLeft and fragRight and navigate to Frag_Notes_Create
-                ft2.remove(fragLeft);
-                ft2.remove(fragRight);
                 ft2.replace(R.id.MyFrameLayout, fragCreateNote);
                 ft2.addToBackStack(null);
                 ft2.commit();
@@ -116,9 +128,6 @@ public class Frag_Notes extends Fragment implements LoaderManager.LoaderCallback
 
             @Override
             public void onClick(View view) {
-                //remove fragLeft and fragRight and navigate to Frag_Notes_Create
-                ft2.remove(fragLeft);
-                ft2.remove(fragRight);
                 ft2.replace(R.id.MyFrameLayout, fragCreateNote);
                 ft2.addToBackStack(null);
                 ft2.commit();
@@ -191,11 +200,6 @@ public class Frag_Notes extends Fragment implements LoaderManager.LoaderCallback
         restartLoader();
     }
 
-    public void insertNewNote(String noteText){
-        insertNote(noteText);
-        //restartLoader();
-    }
-
     public void restartLoader() {
         getLoaderManager().restartLoader(0,null,this);
     }
@@ -205,9 +209,8 @@ public class Frag_Notes extends Fragment implements LoaderManager.LoaderCallback
         ContentValues values = new ContentValues();
         values.put(DB_OpenHelper.NOTE_TEXT, noteText);
         Uri noteUri = getContext().getContentResolver().insert(NotesProvider.CONTENT_URI, values);
-
-        //Log.d("Frag_Note", "Inserted Note " + noteUri.getLastPathSegment());
     }
+
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {

@@ -15,4 +15,8 @@
     <string name="title_activity_notes">Notes</string>
     <string name="fighter_select">Fighter Select</string>
     <string name="notes">Notes</string>
+    <string name="submit_title">Submit Title</string>
+    <string name="note_updated">Note updated!</string>
+    <string name="delete">delete</string>
+    <string name="note_deleted">Note deleted</string>
 </resources>

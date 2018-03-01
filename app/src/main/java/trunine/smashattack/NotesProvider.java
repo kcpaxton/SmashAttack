@@ -42,6 +42,9 @@ public class NotesProvider extends ContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] strings, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
 
+        if(uriMatcher.match(uri) == NOTES_ID){
+            selection = DB_OpenHelper.NOTE_ID + "=" + uri.getLastPathSegment();
+        }
 
         return database.query(DB_OpenHelper.TABLE_NOTES, DB_OpenHelper.ALL_COLUMNS, selection, null, null, null, DB_OpenHelper.NOTE_CREATED + " DESC");
     }

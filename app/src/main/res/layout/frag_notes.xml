@@ -12,42 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-
-    <FrameLayout
-        android:id="@+id/frag_left"
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="20dp" />
-
-
-    <FrameLayout
-        android:id="@+id/frag_right"
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp" />
-
-    <FrameLayout
-        android:id="@+id/listOfNotesLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" >
-
-       <!-- <Button
-            android:id="@+id/createNoteTemplateButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="false"
-            android:layout_gravity="bottom|left"
-            android:layout_marginBottom="22dp"
-            android:gravity="center_vertical|end"
-            android:text="@string/create_note_template" /> -->
-
-
-    </FrameLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/createNoteButton"
         android:layout_width="wrap_content"
