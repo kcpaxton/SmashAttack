@@ -29,9 +29,10 @@ public class Frag_Notes_Create extends Fragment {
     public static String noteTitle = "";
     private String action;
     private static EditText editor;
-    private static TextView title;
+    private static EditText titleEditor;
     private String noteFilter;
-    private String oldText;
+    private String oldBodyText;
+    private String oldTitleText;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,8 +52,9 @@ public class Frag_Notes_Create extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         editor = getActivity().findViewById(R.id.editText);
-        title = getActivity().findViewById(R.id.title);
-        title.setText(noteTitle);
+        titleEditor = getActivity().findViewById(R.id.editTextTitle);
+        //title = getActivity().findViewById(R.id.title);
+        //title.setText(noteTitle);
         checkAndSetTemplateData();
         Bundle bundle = this.getArguments();
         if(bundle != null){
@@ -115,29 +117,31 @@ public class Frag_Notes_Create extends Fragment {
 
     public void finishEditing(){
         String newText = editor.getText().toString().trim();
+        String newTitle = titleEditor.getText().toString().trim();
         Frag_Notes frag_notes = new Frag_Notes();
 
         switch(action){
             case Intent.ACTION_INSERT:
                 if(newText.length() > 0) {
-                    insertNote(newText);
+                    insertNote(newText, newTitle);
                 }
                 break;
             case Intent.ACTION_EDIT:
                 if(newText.length() == 0){
                     deleteNote();
-                }else if(oldText.equals(newText)) {
+                }else if(oldBodyText.equals(newText) && oldTitleText.equals(newTitle)) {
                     //do nothing;
                 }else{
-                    updateNote(newText);
+                    updateNote(newText, newTitle);
                 }
                 break;
         }
 
     }
 
-    private void updateNote(String noteText) {
+    private void updateNote(String noteText, String noteTitle) {
         ContentValues values = new ContentValues();
+        values.put(DB_OpenHelper.NOTE_TITLE, noteTitle);
         values.put(DB_OpenHelper.NOTE_TEXT, noteText);
         getActivity().getContentResolver().update(NotesProvider.CONTENT_URI, values, noteFilter, null);
         Toast.makeText(getContext(), getString(R.string.note_updated), Toast.LENGTH_SHORT).show();
@@ -149,11 +153,14 @@ public class Frag_Notes_Create extends Fragment {
         Uri uri = Uri.parse(uriString);
 
         if(uri != null){
-            noteFilter = DB_OpenHelper.NOTE_ID + "=" + uri.getLastPathSegment();
+          //  noteFilter = DB_OpenHelper.NOTE_ID + "=" + uri.getLastPathSegment();
             Cursor cursor = getActivity().getContentResolver().query(uri, DB_OpenHelper.ALL_COLUMNS, noteFilter, null, null);
-            cursor.moveToFirst();
-            oldText = cursor.getString(cursor.getColumnIndex(DB_OpenHelper.NOTE_TEXT));
-            editor.setText(oldText);
+            if( cursor != null && cursor.moveToFirst() ) {
+                oldBodyText = cursor.getString(cursor.getColumnIndex(DB_OpenHelper.NOTE_TEXT));
+                editor.setText(oldBodyText);
+                oldTitleText = cursor.getString(cursor.getColumnIndex(DB_OpenHelper.NOTE_TITLE));
+                titleEditor.setText(oldTitleText);
+            }
             editor.requestFocus();
         }
 
@@ -166,8 +173,9 @@ public class Frag_Notes_Create extends Fragment {
         }
     }
 
-    private void insertNote(String noteText) {
+    private void insertNote(String noteText, String noteTitle) {
         ContentValues values = new ContentValues();
+        values.put(DB_OpenHelper.NOTE_TITLE, noteTitle);
         values.put(DB_OpenHelper.NOTE_TEXT, noteText);
         getActivity().getContentResolver().insert(NotesProvider.CONTENT_URI, values);
         //Frag_Notes frag_notes = new Frag_Notes();

@@ -143,9 +143,6 @@ public class Frag_Notes extends Fragment implements LoaderManager.LoaderCallback
         int id = item.getItemId();
 
         switch (id){
-            case R.id.action_create_sample:
-                insertSampleData();
-                break;
             case R.id.action_delete_all:
                 deleteAllNotes();
                 break;
@@ -192,21 +189,13 @@ public class Frag_Notes extends Fragment implements LoaderManager.LoaderCallback
                 .show();
     }
 
-    private void insertSampleData() {
-        insertNote("Simple note");
-        insertNote("Multi-line\nnote");
-        insertNote("Very long note with a lot of text that exceeds the width of the screen");
-
-        restartLoader();
-    }
-
     public void restartLoader() {
         getLoaderManager().restartLoader(0,null,this);
     }
 
-    public void insertNote(String noteText) {
-
+    public void insertNote(String noteText, String noteTitle) {
         ContentValues values = new ContentValues();
+        values.put(DB_OpenHelper.NOTE_TITLE, noteTitle);
         values.put(DB_OpenHelper.NOTE_TEXT, noteText);
         Uri noteUri = getContext().getContentResolver().insert(NotesProvider.CONTENT_URI, values);
     }

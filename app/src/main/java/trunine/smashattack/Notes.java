@@ -79,9 +79,6 @@ public class Notes extends AppCompatActivity implements LoaderManager.LoaderCall
         int id = item.getItemId();
 
         switch (id){
-            case R.id.action_create_sample:
-                insertSampleData();
-                break;
             case R.id.action_delete_all:
                 deleteAllNotes();
                 break;

@@ -13,15 +13,17 @@ public class DB_OpenHelper extends SQLiteOpenHelper {
     //Constants for identifying table and columns
     public static final String TABLE_NOTES = "notes";
     public static final String NOTE_ID = "_id";
+    public static final String NOTE_TITLE = "noteTitle";
     public static final String NOTE_TEXT = "noteText";
     public static final String NOTE_CREATED = "noteCreated";
 
-    public static final String[] ALL_COLUMNS ={NOTE_ID, NOTE_TEXT, NOTE_CREATED};
+    public static final String[] ALL_COLUMNS ={NOTE_ID,NOTE_TITLE, NOTE_TEXT, NOTE_CREATED};
 
     //SQL to create table
     private static final String TABLE_CREATE =
             "CREATE TABLE " + TABLE_NOTES + " (" +
                     NOTE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    NOTE_TITLE + " TITLE, " +
                     NOTE_TEXT + " TEXT, " +
                     NOTE_CREATED + " TEXT default CURRENT_TIMESTAMP" +
                     ")";
