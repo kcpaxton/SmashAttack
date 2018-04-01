@@ -23,15 +23,15 @@ public class Adapter_NotesCursor extends CursorAdapter{
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
 
-        String noteText = cursor.getString(cursor.getColumnIndex(DB_OpenHelper.NOTE_TEXT)); //Change this to Note_Title when ready
+        String noteTitle = cursor.getString(cursor.getColumnIndex(DB_OpenHelper.NOTE_TITLE)); //Change this to Note_Title when ready
 
-        int position = noteText.indexOf(10);//ascii value of linefeed character
+        int position = noteTitle.indexOf(10);//ascii value of linefeed character
         if(position != -1){
-            noteText = noteText.substring(0, position) + "...";
+            noteTitle = noteTitle.substring(0, position) + "...";
         }
 
-        TextView textView = view.findViewById(R.id.tvNote);
-        textView.setText(noteText);
+        TextView textView = view.findViewById(R.id.headerNote);
+        textView.setText(noteTitle);
 
     }
 }

@@ -118,16 +118,19 @@ public class Frag_Notes_Create extends Fragment {
     public void finishEditing(){
         String newText = editor.getText().toString().trim();
         String newTitle = titleEditor.getText().toString().trim();
+        if(newTitle.isEmpty()){
+            newTitle = "Title";
+        }
         Frag_Notes frag_notes = new Frag_Notes();
 
         switch(action){
             case Intent.ACTION_INSERT:
-                if(newText.length() > 0) {
+                if(newText.length() > 0 || newTitle != "Title") {
                     insertNote(newText, newTitle);
                 }
                 break;
             case Intent.ACTION_EDIT:
-                if(newText.length() == 0){
+                if(newText.length() == 0 && newTitle == "Title"){
                     deleteNote();
                 }else if(oldBodyText.equals(newText) && oldTitleText.equals(newTitle)) {
                     //do nothing;
