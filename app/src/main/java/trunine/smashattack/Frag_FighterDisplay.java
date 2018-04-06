@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -27,13 +29,14 @@ public class Frag_FighterDisplay extends Fragment {
     private ArrayList<DisplayFighterGroup> fighterGroupList = new ArrayList<DisplayFighterGroup>();
     private Adapter_FighterDisplay listAdapter;
     private ExpandableListView displayFighterExpandableListView;
+    private ActionBar actionBar;
     int progressStatus;
     int position;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        // ((AppCompatActivity) getActivity()).getSupportActionBar().hide(); //hides the original actionBar
-        setHasOptionsMenu(true);
+        //actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar(); //hides the original actionBar
+       // setHasOptionsMenu(true);
 
         return inflater.inflate(R.layout.frag_fighter_display, container, false);
     }
@@ -41,16 +44,6 @@ public class Frag_FighterDisplay extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //********************************************************************************************
-        //Sets the collapsing toolbar as the toolbar
-        //********************************************************************************************
-        //Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.anim_toolbar);
-       // ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        if(((AppCompatActivity)getActivity()).getSupportActionBar() != null){
-            ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-        //********************************************************************************************
-
 
         displayAttributes(); //sets the attributes for the selected character
         //expandAll();
@@ -64,9 +57,7 @@ public class Frag_FighterDisplay extends Fragment {
         displayFighterExpandableListView.setPaddingRelative(0, 50, 20, 0);
 
 
-        //****************************************************************************************************************
         // setOnChildClickListener listener for child row click
-        //****************************************************************************************************************
         displayFighterExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
@@ -83,11 +74,8 @@ public class Frag_FighterDisplay extends Fragment {
 
             }
         });
-        //***************************************************************************************************************
 
-        //******************************************************************************************************
         // setOnGroupClickListener listener for group heading click
-        //******************************************************************************************************
         displayFighterExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
@@ -96,58 +84,30 @@ public class Frag_FighterDisplay extends Fragment {
                 return false;
             }
         });
-        //******************************************************************************************************
 
-        //******************************************************************************************
         // Set the fighter's portrait picture
-        //******************************************************************************************
         ImageView fighterPortrait = (ImageView) view.findViewById(R.id.fighterPortrait_id);
         Picasso.with(getContext()).load(fighterData.getPortraitPictureUrl()).into(fighterPortrait);
-        //******************************************************************************************
     }
 
-    //******************************************************************************************
     // removes the activity's toolbar from the fragment
-    //******************************************************************************************
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setTitle(fighterData.getName());
-        //ProgressBar progressBar = (ProgressBar) getActivity().findViewById(R.id.progressbar);
-        // progressBar.setVisibility(View.INVISIBLE);
-        //Toolbar activityToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-       // activityToolbar.setVisibility(View.GONE);
+        ((MainActivity)getActivity()).hideMainActionBar();
+        Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.anim_toolbar);
+        setToolbar(toolbar);
     }
-    //******************************************************************************************
 
-
-    ///******************************************************************************************
     // Sets the activity's toolbar to visible
-    //*******************************************************************************************
     @Override
-    public void onStop() {
-        super.onStop();
-        Toolbar activityToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-
-        activityToolbar.setVisibility(View.VISIBLE);
-
+    public void onPause() {
+        super.onPause();
+        ((MainActivity)getActivity()).setMainActionBar();
+        ((MainActivity)getActivity()).showMainActionBar();
     }
 
-    //******************************************************************************************
-   /* @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            getActivity().onBackPressed();
-
-            return true;
-        }
-        return false;
-    }*/
-
-
-    //*****************************************************************************************************************************************************
     //Sets the attributes
-    //*****************************************************************************************************************************************************
     private void displayAttributes(){
         TextView attributesText = (TextView) getActivity().findViewById(R.id.textview_attributes_id);
         attributesText.setText("Weight: " + fighterData.Attributes.getWeight() + " (Rank: " + fighterData.Attributes.getWeightRank() + ")" +
@@ -163,34 +123,25 @@ public class Frag_FighterDisplay extends Fragment {
                 "\n\nTether: " + fighterData.Attributes.getTether());
         attributesText.setTextSize(22);
     }
-    //****************************************************************************************************************************************************
 
 
-    //******************************************************************************************
     // Expands all the groups
-    //******************************************************************************************
     private void expandAll() {
         int count = listAdapter.getGroupCount();
         for (int i = 0; i < count; i++){
             displayFighterExpandableListView.expandGroup(i);
         }
     }
-    //******************************************************************************************
-    //******************************************************************************************
+
     // Collapses all groups
-    //******************************************************************************************
     private void collapseAll() {
         int count = listAdapter.getGroupCount();
         for (int i = 0; i < count; i++){
             displayFighterExpandableListView.collapseGroup(i);
         }
     }
-    //******************************************************************************************
 
-
-    //******************************************************************************************
     // Initializes data in the expandable list view
-    //******************************************************************************************
     private int initializeData(){
         int groupPosition = 0;
 
@@ -228,13 +179,7 @@ public class Frag_FighterDisplay extends Fragment {
         return groupPosition;
     }
 
-
-    //******************************************************************************************
-
-
-    //******************************************************************************************
     // Retrieves the ID from Frag_FighterSelect
-    //******************************************************************************************
     public void getFighterData(int id){
         final int position = id;
         Thread thread = new Thread(new Runnable() {
@@ -259,4 +204,12 @@ public class Frag_FighterDisplay extends Fragment {
             e.printStackTrace();
         }
     }
+
+    public void setToolbar(Toolbar toolbar){
+        if(toolbar != null) {
+            ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
 }

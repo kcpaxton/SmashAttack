@@ -130,7 +130,7 @@ public class Frag_Notes_Create extends Fragment {
                 }
                 break;
             case Intent.ACTION_EDIT:
-                if(newText.length() == 0 && newTitle == "Title"){
+                if(newText.length() == 0 && newTitle.equals("Title")){
                     deleteNote();
                 }else if(oldBodyText.equals(newText) && oldTitleText.equals(newTitle)) {
                     //do nothing;
@@ -156,7 +156,7 @@ public class Frag_Notes_Create extends Fragment {
         Uri uri = Uri.parse(uriString);
 
         if(uri != null){
-          //  noteFilter = DB_OpenHelper.NOTE_ID + "=" + uri.getLastPathSegment();
+            noteFilter = DB_OpenHelper.NOTE_ID + "=" + uri.getLastPathSegment();
             Cursor cursor = getActivity().getContentResolver().query(uri, DB_OpenHelper.ALL_COLUMNS, noteFilter, null, null);
             if( cursor != null && cursor.moveToFirst() ) {
                 oldBodyText = cursor.getString(cursor.getColumnIndex(DB_OpenHelper.NOTE_TEXT));

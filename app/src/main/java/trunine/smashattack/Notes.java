@@ -50,9 +50,6 @@ public class Notes extends AppCompatActivity implements LoaderManager.LoaderCall
         final FloatingActionButton createNoteButton = findViewById(R.id.createNoteButton);
 
         final FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        final FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
-        final Fragment fragLeft = new Frag_Notes_Create_Select();
-        final Fragment fragRight = new Frag_Notes_Create_Select();
         final Fragment fragCreateNote = new Frag_Notes_Create();
 
         createNoteButton.setOnClickListener(new View.OnClickListener(){
@@ -60,12 +57,9 @@ public class Notes extends AppCompatActivity implements LoaderManager.LoaderCall
 
             @Override
             public void onClick(View view) {
-                //remove fragLeft and fragRight and navigate to Frag_Notes_Create
-                ft2.remove(fragLeft);
-                ft2.remove(fragRight);
-                ft2.add(R.id.MyNotesLayout, fragCreateNote);
-                ft2.addToBackStack(null);
-                ft2.commit();
+                ft.add(R.id.MyNotesLayout, fragCreateNote);
+                ft.addToBackStack(null);
+                ft.commit();
 
             }
 

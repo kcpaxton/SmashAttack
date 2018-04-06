@@ -19,4 +19,6 @@
     <string name="note_updated">Note updated!</string>
     <string name="delete">delete</string>
     <string name="note_deleted">Note deleted</string>
+    <string name="drawer_open" />
+    <string name="drawer_close" />
 </resources>

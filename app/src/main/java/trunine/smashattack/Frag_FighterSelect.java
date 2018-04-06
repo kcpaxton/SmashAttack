@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -39,10 +41,6 @@ public class Frag_FighterSelect extends ListFragment {
         getListView().setDivider(null);
         getListView().setDividerHeight(0);
         getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-
-        //******************************************************************************************
-        // Set the OnItemClickListener
-        //******************************************************************************************
         getListView().setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
@@ -63,19 +61,16 @@ public class Frag_FighterSelect extends ListFragment {
                     }
                 }
         );
-        //******************************************************************************************
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setTitle("Fighter Select");
-
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle( "Fighter Select");
     }
 
-    //******************************************************************************************
     // Retrieve the Icon data from http://matthewgollaher.azurewebsites.net/wiiusmash4/card
-    //******************************************************************************************
     public void getFighterIcons() {
 
 

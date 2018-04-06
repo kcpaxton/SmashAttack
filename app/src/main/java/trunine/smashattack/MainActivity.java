@@ -2,6 +2,7 @@ package trunine.smashattack;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -144,4 +145,15 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    public void hideMainActionBar(){
+        toolbar.setVisibility(View.GONE);
+    }
+
+    public void showMainActionBar(){
+
+        toolbar.setVisibility(View.VISIBLE);
+    }
+    public void setMainActionBar(){
+        setSupportActionBar(toolbar);
+    }
 }

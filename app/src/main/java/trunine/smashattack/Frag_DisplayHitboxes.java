@@ -24,14 +24,14 @@ public class Frag_DisplayHitboxes extends Fragment {
     Model_Fighter fighterData = new Model_Fighter();
     DisplayFighterGroup fighterGroupInfo;
     List<String> frameUrls;
+
     int groupPosition;
     int childPosition;
     int framePosition = 0;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
-
+        //setHasOptionsMenu(true);
         return inflater.inflate(R.layout.frag_display_hitboxes, container, false);
 
     }
@@ -39,11 +39,6 @@ public class Frag_DisplayHitboxes extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //********************************************************************************************
-        //Sets the collapsing toolbar as the toolbar
-        //********************************************************************************************
-        //((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        //********************************************************************************************
     }
 
     @Override
@@ -148,33 +143,15 @@ public class Frag_DisplayHitboxes extends Fragment {
         //this.fighterData = fighterData;
     }
 
-    //******************************************************************************************
     // removes the activity's toolbar from the fragment
-    //******************************************************************************************
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setTitle( fighterGroupInfo.getAttacks().get(childPosition).getName());
-        //ProgressBar progressBar = (ProgressBar) getActivity().findViewBfighterGroupInfo.yId(R.id.progressbar);
-        // progressBar.setVisibility(View.INVISIBLE);
-        //Toolbar activityToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-        //activityToolbar.setVisibility(View.GONE);
-
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        toolbar.setTitle( fighterGroupInfo.getAttacks().get(childPosition).getName());
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-    //******************************************************************************************
-
-
-    ///******************************************************************************************
-    // Sets the activity's toolbar to visible
-    //*******************************************************************************************
-   /* @Override
-    public void onStop() {
-        super.onStop();
-        //Toolbar activityToolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-
-       // activityToolbar.setVisibility(View.VISIBLE);
-
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -184,4 +161,5 @@ public class Frag_DisplayHitboxes extends Fragment {
         }
         return false;
     }
+
 }

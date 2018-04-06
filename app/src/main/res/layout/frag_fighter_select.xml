@@ -15,12 +15,11 @@
         android:columnWidth="200dp"
         android:gravity="left"
         android:headerDividersEnabled="false"
+        android:listSelector="@drawable/selector"
         android:numColumns="1"
         android:stretchMode="columnWidth"
         android:title="ListView"
-        android:verticalSpacing="0dp"
-        android:listSelector="@drawable/selector"
-        />
+        android:verticalSpacing="0dp" />
 
 
 
