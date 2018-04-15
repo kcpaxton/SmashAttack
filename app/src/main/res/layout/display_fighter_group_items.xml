@@ -9,7 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="35sp"
-        android:textSize="50dp"
-        android:textStyle="bold"  />
+        android:textSize="40dp"
+
+        android:textColor="@color/colorText"/>
 
 </RelativeLayout>

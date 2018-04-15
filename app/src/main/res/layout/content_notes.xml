@@ -12,7 +12,7 @@
 
     <ListView
         android:id="@+id/android:list"
-        android:background="@color/colorPrimarySecondary"
+        android:background="@color/colorPrimaryDark"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

@@ -1,5 +1,6 @@
 package trunine.smashattack;
 
+
 public class Model_Attack extends Model_Move{
 
     public String HitboxActiveRange;

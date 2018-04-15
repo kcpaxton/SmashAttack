@@ -3,5 +3,5 @@
     <item android:state_pressed="true"
         android:drawable="@android:drawable/list_selector_background" />
     <item android:state_pressed="false"
-        android:drawable="@color/colorPrimarySecondary" />
+        android:drawable="@color/colorPrimaryDark" />
 </selector>

@@ -8,6 +8,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:paddingLeft="60dp"
-        android:textSize="30dp" />
+        android:textSize="30dp"
+        android:text="mytext"
+        android:textColor="@color/colorText"/>
 
 </RelativeLayout>

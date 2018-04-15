@@ -16,7 +16,9 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.squareup.picasso.Picasso;
 
 import java.net.URL;
@@ -35,8 +37,6 @@ public class Frag_FighterDisplay extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        //actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar(); //hides the original actionBar
-       // setHasOptionsMenu(true);
 
         return inflater.inflate(R.layout.frag_fighter_display, container, false);
     }
@@ -45,7 +45,7 @@ public class Frag_FighterDisplay extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        displayAttributes(); //sets the attributes for the selected character
+        //displayAttributes();
         //expandAll();
         // initialize display data into the expandable list
         fighterGroupList.clear();
@@ -54,7 +54,7 @@ public class Frag_FighterDisplay extends Fragment {
         displayFighterExpandableListView.setFocusable(false);
         listAdapter = new Adapter_FighterDisplay(getActivity(), fighterGroupList);
         displayFighterExpandableListView.setAdapter(listAdapter);
-        displayFighterExpandableListView.setPaddingRelative(0, 50, 20, 0);
+        displayFighterExpandableListView.setPaddingRelative(0, 10, 20, 0);
 
 
         // setOnChildClickListener listener for child row click
@@ -186,6 +186,9 @@ public class Frag_FighterDisplay extends Fragment {
             public void run() {
                 try {
                     ObjectMapper objectMapper = new ObjectMapper();
+                    objectMapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
+                    objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+                   // objectMapper.configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
                     //Gathers the fighters data and puts it into fighterData
                     fighterData = objectMapper.readValue(new URL(baseUrl + "fighter/" + position), Model_Fighter.class);
                 } catch (Exception e) {

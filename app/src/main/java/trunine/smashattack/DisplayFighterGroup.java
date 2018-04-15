@@ -3,10 +3,6 @@ package trunine.smashattack;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Treboura on 12/19/2017.
- */
-
 public class DisplayFighterGroup {
     private String name;
     private List<Model_Attack> attacks = new ArrayList<Model_Attack>();

@@ -154,8 +154,9 @@ public class Frag_Notes extends Fragment implements LoaderManager.LoaderCallback
     @Override
     public void onResume() {
         super.onResume();
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.setTitle( "Notes");
 
-        getActivity().setTitle("Notes");
         //add if here
         //if(NotesProvider.CONTENT_URI != NULL{
             restartLoader();
@@ -215,6 +216,7 @@ public class Frag_Notes extends Fragment implements LoaderManager.LoaderCallback
     public void onLoaderReset(Loader<Cursor> loader) {
         cursorAdapter.swapCursor(null);
     }
+
 
 }
 

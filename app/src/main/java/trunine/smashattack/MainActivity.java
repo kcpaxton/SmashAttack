@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener {
@@ -110,8 +111,6 @@ public class MainActivity extends AppCompatActivity
             ft.replace(R.id.MyFrameLayout, frag);
             ft.commit();
         } else if (id == R.id.notes) {
-            //Intent notesIntent = new Intent(this, Notes.class);
-            //startActivity(notesIntent);
             Fragment frag = new Frag_Notes();
             ft.replace(R.id.MyFrameLayout, frag, "Frag_Notes");
             ft.commit();
@@ -130,6 +129,8 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onClick(View v) {
                     onBackPressed();
+                    InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                 }
             });
         } else {

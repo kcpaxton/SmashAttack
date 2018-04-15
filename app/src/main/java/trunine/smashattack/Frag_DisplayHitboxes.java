@@ -1,5 +1,6 @@
 package trunine.smashattack;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
@@ -15,9 +16,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Frag_DisplayHitboxes extends Fragment {
 
@@ -44,6 +48,7 @@ public class Frag_DisplayHitboxes extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
 
 
 
@@ -104,11 +109,24 @@ public class Frag_DisplayHitboxes extends Fragment {
         Button nextFrame = (Button) getActivity().findViewById(R.id.button_next);
         nextFrame.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+
                 if(framePosition != frameUrls.size() -1)
                 {
                     framePosition++;
+                    //startProgress(); // handle showing progress view somehow
+                    Picasso.with(getActivity()).load(frameUrls.get(framePosition)).fetch(new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            Picasso.with(getActivity()).load(frameUrls.get(framePosition)).into(hitboxes);
+                            //stopProgress(); // handle stopping progress view somehow
+                        }
 
-                    Picasso.with(getContext()).load(frameUrls.get(framePosition)).into(hitboxes);
+                        @Override
+                        public void onError() {
+
+                        }
+                    });
                 }
 
 
@@ -123,13 +141,20 @@ public class Frag_DisplayHitboxes extends Fragment {
                 if(framePosition != 0)
                 {
                     framePosition--;
+                    //startProgress(); // handle showing progress view somehow
+                    Picasso.with(getActivity()).load(frameUrls.get(framePosition)).fetch(new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            Picasso.with(getActivity()).load(frameUrls.get(framePosition)).into(hitboxes);
+                            //stopProgress(); // handle stopping progress view somehow
+                        }
 
-                    Picasso.with(getContext()).load(frameUrls.get(framePosition)).into(hitboxes);
+                        @Override
+                        public void onError() {
 
+                        }
+                    });
                 }
-
-
-
             }
         });
     }
@@ -161,5 +186,4 @@ public class Frag_DisplayHitboxes extends Fragment {
         }
         return false;
     }
-
 }
