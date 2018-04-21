@@ -101,19 +101,16 @@ public class Frag_Notes extends Fragment implements LoaderManager.LoaderCallback
             @Override
             public void onClick(View view) {
                 String editTextTemplate =
-                        "**Neutral**\n" +
+                        "- Neutral\n" +
                         "\n" +
                         "\n" +
-                        "**Stages**\n" +
-                        " - Go to\n" +
+                        "- Stages\n" +
+                        "   - Go to\n" +
                         "\n" +
-                        " - Ban\n" +
-                        "\n" +
-                        "\n" +
-                        "**To Remember**\n" +
+                        "   - Ban\n" +
                         "\n" +
                         "\n" +
-                        "**Test**\n";
+                        "- Test\n";
 
                 Frag_Notes_Create frag_notes_create = new Frag_Notes_Create();
                 Frag_Notes_Create.getTemplate(editTextTemplate);
@@ -141,6 +138,7 @@ public class Frag_Notes extends Fragment implements LoaderManager.LoaderCallback
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+
 
         switch (id){
             case R.id.action_delete_all:

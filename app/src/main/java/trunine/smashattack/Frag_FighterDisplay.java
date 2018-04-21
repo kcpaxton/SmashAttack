@@ -2,8 +2,10 @@ package trunine.smashattack;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,20 +34,32 @@ public class Frag_FighterDisplay extends Fragment {
     private Adapter_FighterDisplay listAdapter;
     private ExpandableListView displayFighterExpandableListView;
     private ActionBar actionBar;
+    private ViewPager viewPager;
+    private Adapter_SectionsPage adapter_sectionsPage;
+
+
     int progressStatus;
     int position;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.frag_fighter_display, container, false);
+        View view = inflater.inflate(R.layout.frag_fighter_display, container, false);
+
+        return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //displayAttributes();
+        adapter_sectionsPage = new Adapter_SectionsPage(getChildFragmentManager());
+        viewPager = (ViewPager) getActivity().findViewById(R.id.viewPager);
+        setupViewPager(viewPager);
+
+        TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager);
+        displayAttributes();
         //expandAll();
         // initialize display data into the expandable list
         fighterGroupList.clear();
@@ -97,6 +111,7 @@ public class Frag_FighterDisplay extends Fragment {
         ((MainActivity)getActivity()).hideMainActionBar();
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.anim_toolbar);
         setToolbar(toolbar);
+        toolbar.setTitle(fighterData.getName());
     }
 
     // Sets the activity's toolbar to visible
@@ -109,19 +124,19 @@ public class Frag_FighterDisplay extends Fragment {
 
     //Sets the attributes
     private void displayAttributes(){
-        TextView attributesText = (TextView) getActivity().findViewById(R.id.textview_attributes_id);
-        attributesText.setText("Weight: " + fighterData.Attributes.getWeight() + " (Rank: " + fighterData.Attributes.getWeightRank() + ")" +
-                "\n\nRun Speed: " + fighterData.Attributes.getRunSpeed() + " (Rank: " + fighterData.Attributes.getRunSpeedRank() + ")" +
-                "\n\nWalk Speed: " + fighterData.Attributes.getWalkSpeed() + " (Rank: " + fighterData.Attributes.getWalkSpeedRank() + ")" +
-                "\n\nAir Speed: " + fighterData.Attributes.getAirSpeed() + " (Rank: " + fighterData.Attributes.getAirSpeedRank() + ")" +
-                "\n\nFall Speed: " + fighterData.Attributes.getFallSpeed() + " (Rank: " + fighterData.Attributes.getFallSpeedRank() + ")" +
-                "\n\nFast Fall Speed: " + fighterData.Attributes.getFastFallSpeed() + " (Rank: " + fighterData.Attributes.getFastFallSpeedRank() + ")" +
-                "\n\nMaximum Jumps: " + fighterData.Attributes.getMaximumJumps() +
-                "\n\nWall Jump: " + fighterData.Attributes.getWallJump() +
-                "\n\nWall Cling: " + fighterData.Attributes.getWallCling() +
-                "\n\nCrawl: " + fighterData.Attributes.getCrawl() +
-                "\n\nTether: " + fighterData.Attributes.getTether());
-        attributesText.setTextSize(22);
+//        TextView attributesText = (TextView) getActivity().findViewById(R.id.textview_attributes_id);
+//        attributesText.setText("Weight: " + fighterData.Attributes.getWeight() + " (Rank: " + fighterData.Attributes.getWeightRank() + ")" +
+//                "\n\nRun Speed: " + fighterData.Attributes.getRunSpeed() + " (Rank: " + fighterData.Attributes.getRunSpeedRank() + ")" +
+//                "\n\nWalk Speed: " + fighterData.Attributes.getWalkSpeed() + " (Rank: " + fighterData.Attributes.getWalkSpeedRank() + ")" +
+//                "\n\nAir Speed: " + fighterData.Attributes.getAirSpeed() + " (Rank: " + fighterData.Attributes.getAirSpeedRank() + ")" +
+//                "\n\nFall Speed: " + fighterData.Attributes.getFallSpeed() + " (Rank: " + fighterData.Attributes.getFallSpeedRank() + ")" +
+//                "\n\nFast Fall Speed: " + fighterData.Attributes.getFastFallSpeed() + " (Rank: " + fighterData.Attributes.getFastFallSpeedRank() + ")" +
+//                "\n\nMaximum Jumps: " + fighterData.Attributes.getMaximumJumps() +
+//                "\n\nWall Jump: " + fighterData.Attributes.getWallJump() +
+//                "\n\nWall Cling: " + fighterData.Attributes.getWallCling() +
+//                "\n\nCrawl: " + fighterData.Attributes.getCrawl() +
+//                "\n\nTether: " + fighterData.Attributes.getTether());
+//        attributesText.setTextSize(22);
     }
 
 
@@ -213,6 +228,13 @@ public class Frag_FighterDisplay extends Fragment {
             ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
             ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    private void setupViewPager(ViewPager viewPager){
+        Adapter_SectionsPage adapter = new Adapter_SectionsPage(getChildFragmentManager());
+        adapter.addFragment(new Frag_DisplayFighterAttributes(), "Tab1");
+        adapter.addFragment(new Frag_DisplayFighterMoves(), "Tab2");
+        viewPager.setAdapter(adapter);
     }
 
 }
