@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.fasterxml.jackson.databind.MapperFeature;
@@ -30,13 +31,12 @@ import static trunine.smashattack.Globals.baseUrl;
 
 public class Frag_FighterDisplay extends Fragment {
     Model_Fighter fighterData = new Model_Fighter();
-    private ArrayList<DisplayFighterGroup> fighterGroupList = new ArrayList<DisplayFighterGroup>();
-    private Adapter_FighterDisplay listAdapter;
-    private ExpandableListView displayFighterExpandableListView;
+
     private ActionBar actionBar;
     private ViewPager viewPager;
     private Adapter_SectionsPage adapter_sectionsPage;
-
+    Frag_DisplayFighterMoves frag_displayFighterMoves = new Frag_DisplayFighterMoves();
+    Frag_DisplayFighterAttributes frag_displayFighterAttributes = new Frag_DisplayFighterAttributes();
 
     int progressStatus;
     int position;
@@ -53,51 +53,15 @@ public class Frag_FighterDisplay extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        frag_displayFighterMoves.setFighterData(fighterData);
+        frag_displayFighterAttributes.setFighterData(fighterData);
+
         adapter_sectionsPage = new Adapter_SectionsPage(getChildFragmentManager());
         viewPager = (ViewPager) getActivity().findViewById(R.id.viewPager);
         setupViewPager(viewPager);
 
         TabLayout tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
-        displayAttributes();
-        //expandAll();
-        // initialize display data into the expandable list
-        fighterGroupList.clear();
-        initializeData();
-        displayFighterExpandableListView = (ExpandableListView) getActivity().findViewById(R.id.displayFighterExpandableListView);
-        displayFighterExpandableListView.setFocusable(false);
-        listAdapter = new Adapter_FighterDisplay(getActivity(), fighterGroupList);
-        displayFighterExpandableListView.setAdapter(listAdapter);
-        displayFighterExpandableListView.setPaddingRelative(0, 10, 20, 0);
-
-
-        // setOnChildClickListener listener for child row click
-        displayFighterExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                Frag_DisplayHitboxes fragDisplayHitboxes = new Frag_DisplayHitboxes();
-
-                fragDisplayHitboxes.getData(/*fighterData, */fighterGroupList.get(groupPosition), groupPosition,childPosition);
-
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                //ft.addToBackStack("DisplayFighterFragment");
-                ft.replace(R.id.MyFrameLayout, fragDisplayHitboxes, "DisplayHitboxesFragment");
-                ft.addToBackStack(null);
-                ft.commit();
-                return false;
-
-            }
-        });
-
-        // setOnGroupClickListener listener for group heading click
-        displayFighterExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                //get the group header
-                DisplayFighterGroup headerInfo = fighterGroupList.get(groupPosition);
-                return false;
-            }
-        });
 
         // Set the fighter's portrait picture
         ImageView fighterPortrait = (ImageView) view.findViewById(R.id.fighterPortrait_id);
@@ -122,84 +86,14 @@ public class Frag_FighterDisplay extends Fragment {
         ((MainActivity)getActivity()).showMainActionBar();
     }
 
-    //Sets the attributes
-    private void displayAttributes(){
-//        TextView attributesText = (TextView) getActivity().findViewById(R.id.textview_attributes_id);
-//        attributesText.setText("Weight: " + fighterData.Attributes.getWeight() + " (Rank: " + fighterData.Attributes.getWeightRank() + ")" +
-//                "\n\nRun Speed: " + fighterData.Attributes.getRunSpeed() + " (Rank: " + fighterData.Attributes.getRunSpeedRank() + ")" +
-//                "\n\nWalk Speed: " + fighterData.Attributes.getWalkSpeed() + " (Rank: " + fighterData.Attributes.getWalkSpeedRank() + ")" +
-//                "\n\nAir Speed: " + fighterData.Attributes.getAirSpeed() + " (Rank: " + fighterData.Attributes.getAirSpeedRank() + ")" +
-//                "\n\nFall Speed: " + fighterData.Attributes.getFallSpeed() + " (Rank: " + fighterData.Attributes.getFallSpeedRank() + ")" +
-//                "\n\nFast Fall Speed: " + fighterData.Attributes.getFastFallSpeed() + " (Rank: " + fighterData.Attributes.getFastFallSpeedRank() + ")" +
-//                "\n\nMaximum Jumps: " + fighterData.Attributes.getMaximumJumps() +
-//                "\n\nWall Jump: " + fighterData.Attributes.getWallJump() +
-//                "\n\nWall Cling: " + fighterData.Attributes.getWallCling() +
-//                "\n\nCrawl: " + fighterData.Attributes.getCrawl() +
-//                "\n\nTether: " + fighterData.Attributes.getTether());
-//        attributesText.setTextSize(22);
-    }
-
-
-    // Expands all the groups
-    private void expandAll() {
-        int count = listAdapter.getGroupCount();
-        for (int i = 0; i < count; i++){
-            displayFighterExpandableListView.expandGroup(i);
-        }
-    }
-
-    // Collapses all groups
-    private void collapseAll() {
-        int count = listAdapter.getGroupCount();
-        for (int i = 0; i < count; i++){
-            displayFighterExpandableListView.collapseGroup(i);
-        }
-    }
-
-    // Initializes data in the expandable list view
-    private int initializeData(){
-        int groupPosition = 0;
-
-        DisplayFighterGroup headerInfo = new DisplayFighterGroup();
-        headerInfo.setName("Attacks");
-        headerInfo.setAttackProductList(fighterData.Attacks);
-        fighterGroupList.add(headerInfo);
-
-        headerInfo = new DisplayFighterGroup();
-        headerInfo.setName("Aerials");
-        headerInfo.setAerialsProductList(fighterData.Aerials);
-        fighterGroupList.add(headerInfo);
-
-        headerInfo = new DisplayFighterGroup();
-        headerInfo.setName("Specials");
-        headerInfo.setSpecialsProductList(fighterData.Specials);
-        fighterGroupList.add(headerInfo);
-
-        headerInfo = new DisplayFighterGroup();
-        headerInfo.setName("Grabs");
-        headerInfo.setGrabsProductList(fighterData.Grabs);
-        fighterGroupList.add(headerInfo);
-
-        headerInfo = new DisplayFighterGroup();
-        headerInfo.setName("Throws");
-        headerInfo.setThrowsProductList(fighterData.Throws);
-        fighterGroupList.add(headerInfo);
-
-        headerInfo = new DisplayFighterGroup();
-        headerInfo.setName("Rolls");
-        headerInfo.setRollsProductList(fighterData.Rolls);
-        fighterGroupList.add(headerInfo);
-
-        groupPosition = fighterGroupList.indexOf(headerInfo);
-        return groupPosition;
-    }
-
     // Retrieves the ID from Frag_FighterSelect
     public void getFighterData(int id){
+
         final int position = id;
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 try {
+
                     ObjectMapper objectMapper = new ObjectMapper();
                     objectMapper.configure(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS, true);
                     objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
@@ -213,7 +107,6 @@ public class Frag_FighterDisplay extends Fragment {
 
             }
         });
-
         thread.start();
         try {
 
@@ -232,8 +125,8 @@ public class Frag_FighterDisplay extends Fragment {
 
     private void setupViewPager(ViewPager viewPager){
         Adapter_SectionsPage adapter = new Adapter_SectionsPage(getChildFragmentManager());
-        adapter.addFragment(new Frag_DisplayFighterAttributes(), "Tab1");
-        adapter.addFragment(new Frag_DisplayFighterMoves(), "Tab2");
+        adapter.addFragment(frag_displayFighterMoves, "Hitboxes");
+        adapter.addFragment(frag_displayFighterAttributes, "Attributes");
         viewPager.setAdapter(adapter);
     }
 

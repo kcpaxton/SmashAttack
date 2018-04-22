@@ -99,12 +99,6 @@ public class Adapter_FighterDisplay extends BaseExpandableListAdapter {
             childItem.setText(detailInfo.getName().trim());
         }
 
-
-
-
-
-
-
         return view;
     }
 

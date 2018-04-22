@@ -1,5 +1,7 @@
 package trunine.smashattack;
 
+import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,12 +28,21 @@ import java.util.List;
 
 public class Frag_FighterSelect extends ListFragment {
     List<Model_Icon> listOfFighterIcons = new ArrayList<>();
+    ProgressBar progressBar;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         getFighterIcons();
 
         return inflater.inflate(R.layout.frag_fighter_select, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        progressBar = (ProgressBar) getActivity().findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -43,20 +55,43 @@ public class Frag_FighterSelect extends ListFragment {
         getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         getListView().setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
+                    @SuppressLint("StaticFieldLeak")
                     @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    public void onItemClick(final AdapterView<?> parent, View view, final int position, long id) {
                         getListView().setCacheColorHint(getResources().getColor(R.color.colorBlack));
 
-                        Frag_FighterDisplay fragFighterDisplay = new Frag_FighterDisplay();
+                        new AsyncTask<Void, Void, Void>() {
 
-                        Model_Icon testFighter = (Model_Icon) parent.getItemAtPosition(position); // Gets the id of the selected fighter
+                            @Override
+                            protected void onPreExecute() {
+                                super.onPreExecute();
+                                progressBar.setVisibility(View.VISIBLE);
+                            }
 
-                        fragFighterDisplay.getFighterData(testFighter.getFighterId());
-                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+                            @Override
+                            protected void onPostExecute(Void aVoid) {
+                                super.onPostExecute(aVoid);
+                                progressBar.setVisibility(View.GONE);
+                            }
 
-                        ft.replace(R.id.MyFrameLayout, fragFighterDisplay, "DisplayFighterFragment");
-                        ft.addToBackStack(null);
-                        ft.commit();
+                            @Override
+                            protected Void doInBackground(Void... params) {
+                                Frag_FighterDisplay fragFighterDisplay = new Frag_FighterDisplay();
+
+                                Model_Icon testFighter = (Model_Icon) parent.getItemAtPosition(position); // Gets the id of the selected fighter
+
+                                fragFighterDisplay.getFighterData(testFighter.getFighterId());
+                                FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+                                ft.replace(R.id.MyFrameLayout, fragFighterDisplay, "DisplayFighterFragment");
+                                ft.addToBackStack(null);
+                                ft.commit();
+                                return null;
+                            }
+                        }.execute();
+
+
+
 
                     }
                 }
