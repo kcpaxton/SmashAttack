@@ -44,6 +44,7 @@ public class Frag_DisplayFighterMoves extends Fragment {
         displayFighterExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
                 Frag_DisplayHitboxes fragDisplayHitboxes = new Frag_DisplayHitboxes();
 
                 fragDisplayHitboxes.getData(/*fighterData, */fighterGroupList.get(groupPosition), groupPosition,childPosition);
@@ -53,6 +54,7 @@ public class Frag_DisplayFighterMoves extends Fragment {
                 ft.replace(R.id.MyFrameLayout, fragDisplayHitboxes, "DisplayHitboxesFragment");
                 ft.addToBackStack(null);
                 ft.commit();
+
                 return false;
 
             }

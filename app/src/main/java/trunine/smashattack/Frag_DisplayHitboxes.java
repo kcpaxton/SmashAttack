@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,8 +48,8 @@ public class Frag_DisplayHitboxes extends Fragment {
     FloatingActionButton stopPlayFrames;
     ImageView hitboxes;
     private Handler handler = new Handler();
-    int height = 350;
-    int width = 500;
+    int height = 300;
+    int width = 400;
     int groupPosition;
     int childPosition;
     int framePosition = 0;
@@ -67,6 +68,7 @@ public class Frag_DisplayHitboxes extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -80,50 +82,93 @@ public class Frag_DisplayHitboxes extends Fragment {
         stopPlayFrames.setVisibility(View.GONE);
 
         if(fighterGroupInfo.getAttacks().size() != 0) {
-            //toolbar.setTitle(fighterGroupInfo.getAttacks().get(childPosition).getName());
-            //TextView textView = (TextView) getActivity().findViewById(R.id.textview);
-            //textView.setText(fighterGroupInfo.getAttacks().get(childPosition).getName());
+            String faf = "0";
+            if(fighterGroupInfo.getAttacks().get(childPosition).getFirstActionableFrame() == null) {
+                faf = "-";
+            }
+            else{
+                faf = fighterGroupInfo.getAttacks().get(childPosition).getFirstActionableFrame().toString();
+            }
+
+            TextView textViewLeft = (TextView) getActivity().findViewById(R.id.displayMoveAttributesLeft);
+            textViewLeft.setText(" FAF:   " + faf +
+                    "\n Angle: " +fighterGroupInfo.getAttacks().get(childPosition).getAngle()  +
+                    "\n BKB:   " + fighterGroupInfo.getAttacks().get(childPosition).getBaseKnockBack() +
+                    "\n KBG:   " + fighterGroupInfo.getAttacks().get(childPosition).getKnockBackGrowth() +
+                    "\n Active Frames:   " + fighterGroupInfo.getAttacks().get(childPosition).getHitboxActiveRange() +
+                    "\n Base Damage:   " +fighterGroupInfo.getAttacks().get(childPosition).getBaseDamage() +
+                    "\n Shield Damage: " + fighterGroupInfo.getAttacks().get(childPosition).getShieldDamage());
 
             frameUrls = fighterGroupInfo.getAttacks().get(childPosition).getAbilityFramePictureUrls();
             setFirstFrame(hitboxes);
 
         }
         else if(fighterGroupInfo.getAerials().size() != 0) {
-            // toolbar.setTitle(fighterGroupInfo.getAerials().get(childPosition).getName());
-            //TextView textView = (TextView) getActivity().findViewById(R.id.textview);
-            //textView.setText(fighterGroupInfo.getAerials().get(childPosition).getName());
+            String faf = "0";
+            if(fighterGroupInfo.getAerials().get(childPosition).getFirstActionableFrame() == null) {
+                faf = "-";
+            }
+            else{
+                faf = fighterGroupInfo.getAerials().get(childPosition).getFirstActionableFrame().toString();
+            }
+
+            TextView textViewLeft = (TextView) getActivity().findViewById(R.id.displayMoveAttributesLeft);
+            textViewLeft.setText(" FAF:   " + faf +
+                    "\n Angle: " +fighterGroupInfo.getAerials().get(childPosition).getAngle()  +
+                    "\n BKB:   " + fighterGroupInfo.getAerials().get(childPosition).getBaseKnockBack() +
+                    "\n KBG:   " + fighterGroupInfo.getAerials().get(childPosition).getKnockBackGrowth() +
+                    "\n Active Frames:   " + fighterGroupInfo.getAerials().get(childPosition).getHitboxActiveRange() +
+                            "\n Base Damage:   " +fighterGroupInfo.getAerials().get(childPosition).getBaseDamage() +
+                            "\n Shield Damage: " + fighterGroupInfo.getAerials().get(childPosition).getShieldDamage());
 
             frameUrls = fighterGroupInfo.getAerials().get(childPosition).getAbilityFramePictureUrls();
             setFirstFrame(hitboxes);
         }
         else if(fighterGroupInfo.getSpecials().size() != 0) {
-            //toolbar.setTitle(fighterGroupInfo.getSpecials().get(childPosition).getName());
-            //TextView textView = (TextView) getActivity().findViewById(R.id.textview);
-           // textView.setText(fighterGroupInfo.getSpecials().get(childPosition).getName());
+            String faf = "0";
+            if(fighterGroupInfo.getSpecials().get(childPosition).getFirstActionableFrame() == null) {
+                faf = "-";
+            }
+            else{
+                faf = fighterGroupInfo.getSpecials().get(childPosition).getFirstActionableFrame().toString();
+            }
+
+            TextView textViewLeft = (TextView) getActivity().findViewById(R.id.displayMoveAttributesLeft);
+            textViewLeft.setText(" FAF:   " + faf +
+                    "\n Angle: " +fighterGroupInfo.getSpecials().get(childPosition).getAngle()  +
+                    "\n BKB:   " + fighterGroupInfo.getSpecials().get(childPosition).getBaseKnockBack() +
+                    "\n KBG:   " + fighterGroupInfo.getSpecials().get(childPosition).getKnockBackGrowth() +
+                    "\n Active Frames:   " + fighterGroupInfo.getSpecials().get(childPosition).getHitboxActiveRange() +
+                            "\n Base Damage:   " +fighterGroupInfo.getSpecials().get(childPosition).getBaseDamage() +
+                            "\n Shield Damage: " + fighterGroupInfo.getSpecials().get(childPosition).getShieldDamage());
 
             frameUrls = fighterGroupInfo.getSpecials().get(childPosition).getAbilityFramePictureUrls();
             setFirstFrame(hitboxes);
         }
         else if(fighterGroupInfo.getGrabs().size() != 0) {
-            //toolbar.setTitle(fighterGroupInfo.getGrabs().get(childPosition).getName());
-            //TextView textView = (TextView) getActivity().findViewById(R.id.textview);
-            //textView.setText(fighterGroupInfo.getGrabs().get(childPosition).getName());
+            TextView textViewLeft = (TextView) getActivity().findViewById(R.id.displayMoveAttributesLeft);
+            textViewLeft.setText(" FAF:   " + fighterGroupInfo.getGrabs().get(childPosition).getFirstActionableFrame() +
+                    "\n Active Frames:   " + fighterGroupInfo.getGrabs().get(childPosition).getHitboxActiveRange());
 
             frameUrls = fighterGroupInfo.getGrabs().get(childPosition).getAbilityFramePictureUrls();
             setFirstFrame(hitboxes);
         }
         else if(fighterGroupInfo.getThrowsList().size() != 0) {
-            //  toolbar.setTitle(fighterGroupInfo.getThrowsList().get(childPosition).getName());
-            //TextView textView = (TextView) getActivity().findViewById(R.id.textview);
-            //textView.setText(fighterGroupInfo.getThrowsList().get(childPosition).getName());
+            TextView textViewLeft = (TextView) getActivity().findViewById(R.id.displayMoveAttributesLeft);
+            textViewLeft.setText(
+                    "\n Angle: " +fighterGroupInfo.getThrowsList().get(childPosition).getAngle()  +
+                    "\n BKB:   " + fighterGroupInfo.getThrowsList().get(childPosition).getBaseKnockBack() +
+                    "\n KBG:   " + fighterGroupInfo.getThrowsList().get(childPosition).getKnockBackGrowth() +
+                    "\n Base Damage:   " +fighterGroupInfo.getThrowsList().get(childPosition).getBaseDamage() +
+                    "\n Shield Damage: " + fighterGroupInfo.getThrowsList().get(childPosition).getShieldDamage());
 
             frameUrls = fighterGroupInfo.getThrowsList().get(childPosition).getAbilityFramePictureUrls();
             setFirstFrame(hitboxes);
         }
         else if(fighterGroupInfo.getRolls().size() != 0) {
-            //toolbar.setTitle(fighterGroupInfo.getRolls().get(childPosition).getName());
-
-            //textView.setText(fighterGroupInfo.getRolls().get(childPosition).getName());
+            TextView textViewLeft = (TextView) getActivity().findViewById(R.id.displayMoveAttributesLeft);
+            textViewLeft.setText(" FAF:      " + fighterGroupInfo.getRolls().get(childPosition).getFirstActionableFrame() +
+                    "\n I-Frames: " +fighterGroupInfo.getRolls().get(childPosition).getIntangibility());
 
             frameUrls = fighterGroupInfo.getRolls().get(childPosition).getAbilityFramePictureUrls();
             setFirstFrame(hitboxes);
@@ -155,15 +200,15 @@ public class Frag_DisplayHitboxes extends Fragment {
                 if(framePosition != frameUrls.size() -1) {
                     framePosition++;
                     frameStepperText.setText("" + (framePosition + 1) + '/' + frameUrls.size());
-                    Picasso.with(getContext()).load(frameUrls.get(framePosition)).resize(width, height).centerCrop().networkPolicy(NetworkPolicy.OFFLINE, NetworkPolicy.NO_CACHE).into(hitboxes, new Callback() {
+                    Picasso.with(getContext()).load(frameUrls.get(framePosition)).resize(width,height).networkPolicy(NetworkPolicy.OFFLINE, NetworkPolicy.NO_CACHE).into(hitboxes, new Callback() {
                         @Override
                         public void onSuccess() {
-                            Picasso.with(getContext()).load(frameUrls.get(framePosition)).resize(width, height).centerCrop().into(hitboxes);
+                            Picasso.with(getContext()).load(frameUrls.get(framePosition)).resize(width,height).into(hitboxes);
                         }
 
                         @Override
                         public void onError() {
-                            Picasso.with(getContext()).load(frameUrls.get(framePosition)).resize(width, height).centerCrop().into(hitboxes);
+                            Picasso.with(getContext()).load(frameUrls.get(framePosition)).resize(width,height).into(hitboxes);
                         }
                         //stopProgress(); // handle stopping progress view somehow
                     });
@@ -179,15 +224,15 @@ public class Frag_DisplayHitboxes extends Fragment {
                 {
                     framePosition--;
                     frameStepperText.setText("" + (framePosition+1) + '/' + frameUrls.size());
-                    Picasso.with(getContext()).load(frameUrls.get(framePosition)).resize(width, height).centerCrop().networkPolicy(NetworkPolicy.OFFLINE, NetworkPolicy.NO_CACHE).into(hitboxes, new Callback() {
+                    Picasso.with(getContext()).load(frameUrls.get(framePosition)).resize(width,height).networkPolicy(NetworkPolicy.OFFLINE, NetworkPolicy.NO_CACHE).into(hitboxes, new Callback() {
                         @Override
                         public void onSuccess() {
-                            Picasso.with(getContext()).load(frameUrls.get(framePosition)).resize(width, height).centerCrop().into(hitboxes);
+                            Picasso.with(getContext()).load(frameUrls.get(framePosition)).resize(width,height).into(hitboxes);
                         }
 
                         @Override
                         public void onError() {
-                            Picasso.with(getContext()).load(frameUrls.get(framePosition)).resize(width, height).centerCrop().into(hitboxes);
+                            Picasso.with(getContext()).load(frameUrls.get(framePosition)).resize(width,height).into(hitboxes);
                         }
                         //stopProgress(); // handle stopping progress view somehow
                     });
@@ -200,7 +245,7 @@ public class Frag_DisplayHitboxes extends Fragment {
     private void preloadFrames(final List<String> frameUrls, final ImageView hitboxes) {
         for (int i = 0; i < frameUrls.size(); i++){
             framePosition = i;
-            Picasso.with(getContext()).load(frameUrls.get(framePosition)).resize(width, height).centerCrop().fetch();
+            Picasso.with(getContext()).load(frameUrls.get(framePosition)).resize(width,height).fetch();
         }
         framePosition = 0;
     }
@@ -221,7 +266,7 @@ public class Frag_DisplayHitboxes extends Fragment {
         Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         //toolbar.setTitle( fighterGroupInfo.getAttacks().get(childPosition).getName());
-        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -235,11 +280,9 @@ public class Frag_DisplayHitboxes extends Fragment {
 
     private void setFirstFrame(ImageView hitboxes){
         if(frameUrls.size() > 0){
-            Picasso.with(getContext()).load(frameUrls.get(framePosition)).into(hitboxes);
+            Picasso.with(getContext()).load(frameUrls.get(framePosition)).resize(width,height).into(hitboxes);
         }
-        else{
-            Picasso.with(getContext()).load(R.drawable.ic_add_24dp).into(hitboxes);
-        }
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -250,7 +293,7 @@ public class Frag_DisplayHitboxes extends Fragment {
             previousFrame.setVisibility(View.VISIBLE);
             playFrames.setVisibility(View.VISIBLE);
         } else {
-            frameStepperText.setText("Sorry! Frame data will be coming soon for this move!");
+
             nextFrame.setVisibility(View.GONE);
             previousFrame.setVisibility(View.GONE);
             playFrames.setVisibility(View.GONE);
@@ -263,15 +306,15 @@ public class Frag_DisplayHitboxes extends Fragment {
         public void run() {
             frameStepperText.setText("" + (framePosition + 1) + '/' + frameUrls.size());
 
-            Picasso.with(getContext()).load(frameUrls.get(framePosition)).resize(width, height).centerCrop().networkPolicy(NetworkPolicy.OFFLINE, NetworkPolicy.NO_CACHE).into(hitboxes, new Callback() {
+            Picasso.with(getContext()).load(frameUrls.get(framePosition)).resize(width,height).networkPolicy(NetworkPolicy.OFFLINE, NetworkPolicy.NO_CACHE).into(hitboxes, new Callback() {
                 @Override
                 public void onSuccess() {
-                    Picasso.with(getContext()).load(frameUrls.get(framePosition)).resize(width, height).centerCrop().into(hitboxes);
+                    Picasso.with(getContext()).load(frameUrls.get(framePosition)).resize(width,height).into(hitboxes);
                 }
 
                 @Override
                 public void onError() {
-                    Picasso.with(getContext()).load(frameUrls.get(framePosition)).resize(width, height).centerCrop().into(hitboxes);
+                    Picasso.with(getContext()).load(frameUrls.get(framePosition)).resize(width,height).into(hitboxes);
                 }
 
             });

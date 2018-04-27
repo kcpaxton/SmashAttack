@@ -1,5 +1,6 @@
 package trunine.smashattack;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -34,6 +35,7 @@ public class Frag_DisplayFighterAttributes extends Fragment {
     }
 
     //Sets the attributes
+    @SuppressLint("SetTextI18n")
     private void displayAttributes(){
         TextView attributesText = (TextView) getActivity().findViewById(R.id.attributes);
         attributesText.setText("Weight: " + fighterData.Attributes.getWeight() + "\n     (Rank: " + fighterData.Attributes.getWeightRank() + ")" +

@@ -1,10 +1,10 @@
 package trunine.smashattack;
 
-/**
- * Created by Treboura on 12/19/2017.
- */
+import android.support.v7.widget.Toolbar;
+
 
 public class Globals {
     final static String baseUrl ="https://matthewgollaher.azurewebsites.net/wiiusmash4/";
     final static String iconUrl ="https://matthewgollaher.azurewebsites.net/wiiusmash4/card";
+    static Toolbar mainToolbar;
 }

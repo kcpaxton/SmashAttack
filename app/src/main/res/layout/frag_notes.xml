@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_add_24dp"
+        android:src="@drawable/ic_note_plus_white_24dp"
         app:backgroundTint="@android:color/holo_blue_dark" />
 
     <android.support.design.widget.FloatingActionButton
@@ -32,7 +32,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         app:layout_anchor="@id/createNoteButton"
-        android:src="@drawable/ic_people_outline_black_24dp"
-        app:backgroundTint="@android:color/holo_orange_light" />
+        android:src="@drawable/ic_note_text_white_24dp"
+        app:backgroundTint="@android:color/holo_purple" />
 
 </android.support.design.widget.CoordinatorLayout>

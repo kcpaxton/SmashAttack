@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -27,6 +29,7 @@ import com.squareup.picasso.Picasso;
 import java.net.URL;
 import java.util.ArrayList;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
 import static trunine.smashattack.Globals.baseUrl;
 
 public class Frag_FighterDisplay extends Fragment {
@@ -74,8 +77,15 @@ public class Frag_FighterDisplay extends Fragment {
         super.onResume();
         ((MainActivity)getActivity()).hideMainActionBar();
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.anim_toolbar);
-        setToolbar(toolbar);
         toolbar.setTitle(fighterData.getName());
+        toolbar.setNavigationIcon(android.support.v7.appcompat.R.drawable.abc_ic_ab_back_material);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
     }
 
     // Sets the activity's toolbar to visible

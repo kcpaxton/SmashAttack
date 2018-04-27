@@ -16,29 +16,33 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import static trunine.smashattack.Globals.mainToolbar;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener {
 
     private DrawerLayout drawer;
-    private Toolbar toolbar;
+
     private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-
+        mainToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(mainToolbar);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         mDrawerToggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, mainToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(mDrawerToggle);
         //drawerToggle.syncState();
 
@@ -125,7 +129,7 @@ public class MainActivity extends AppCompatActivity
     public void onBackStackChanged() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true); // show back button
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            mainToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onBackPressed();
@@ -137,7 +141,7 @@ public class MainActivity extends AppCompatActivity
             //show hamburger
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             mDrawerToggle.syncState();
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            mainToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     drawer.openDrawer(GravityCompat.START);
@@ -147,14 +151,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void hideMainActionBar(){
-        toolbar.setVisibility(View.GONE);
+        mainToolbar.setVisibility(View.GONE);
     }
 
     public void showMainActionBar(){
 
-        toolbar.setVisibility(View.VISIBLE);
+        mainToolbar.setVisibility(View.VISIBLE);
     }
     public void setMainActionBar(){
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mainToolbar);
     }
 }

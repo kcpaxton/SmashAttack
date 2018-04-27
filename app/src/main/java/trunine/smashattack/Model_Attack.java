@@ -1,6 +1,8 @@
 package trunine.smashattack;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+@JsonPropertyOrder(alphabetic = true)
 public class Model_Attack extends Model_Move{
 
     public String HitboxActiveRange;

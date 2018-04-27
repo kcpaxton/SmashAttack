@@ -1,7 +1,9 @@
 package trunine.smashattack;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.util.List;
+@JsonPropertyOrder(alphabetic = true)
 public class Model_Move {
 
     public String Name;

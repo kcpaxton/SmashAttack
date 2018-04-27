@@ -14,11 +14,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.squareup.picasso.Picasso;
 
 import java.net.URI;
 import java.net.URL;
@@ -29,6 +34,8 @@ import java.util.List;
 public class Frag_FighterSelect extends ListFragment {
     List<Model_Icon> listOfFighterIcons = new ArrayList<>();
     ProgressBar progressBar;
+    private AdView adView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -36,6 +43,7 @@ public class Frag_FighterSelect extends ListFragment {
 
         return inflater.inflate(R.layout.frag_fighter_select, container, false);
     }
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -96,6 +104,11 @@ public class Frag_FighterSelect extends ListFragment {
                     }
                 }
         );
+
+        MobileAds.initialize(getActivity().getApplicationContext(), "ca-app-pub-2028376543213618~7792138691");
+        adView = (AdView) getActivity().findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build();
+        adView.loadAd(adRequest);
     }
 
     @Override
@@ -131,4 +144,5 @@ public class Frag_FighterSelect extends ListFragment {
         }
 
     }
+
 }

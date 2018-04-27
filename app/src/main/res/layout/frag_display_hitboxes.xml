@@ -13,34 +13,65 @@
 
     <ImageView
         android:id="@+id/imageView_hitboxes"
+        android:src="@drawable/no_frames"
         android:layout_width="match_parent"
-        android:layout_height="398dp"
-        android:layout_marginTop="60dp" />
+        android:layout_height="398dp" />
+
+    <TextView
+        android:id="@+id/displayMoveAttributesLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="start"
+        android:textSize="20sp"
+        android:textAlignment="textStart"
+        android:textColor="@color/colorWhite"
+        app:layout_anchor="@+id/imageView_hitboxes"
+        app:layout_anchorGravity="start|bottom"
+        android:layout_marginStart="20dp"
+        android:paddingTop="20dp"/>
+
+    <TextView
+        android:id="@+id/displayMoveAttributesRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:textAlignment="textStart"
+        android:textColor="@color/colorWhite"
+        app:layout_anchor="@+id/imageView_hitboxes"
+        app:layout_anchorGravity="end|bottom"
+        android:layout_marginEnd="20dp"
+        android:paddingTop="20dp"/>
 
     <TextView
         android:id="@+id/frameStepper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:gravity="center_horizontal|bottom"
-        android:text="Hello"
+        android:gravity="center_horizontal|top"
         android:textColor="@color/colorWhite"
-        app:layout_anchor="@+id/imageView_hitboxes"
+        app:layout_anchor="@+id/button_play"
         app:layout_anchorGravity="bottom|center" />
 
-
-    <LinearLayout android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:weightSum="2"
-        android:orientation="horizontal">
+        android:elevation="24dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
         <Button
             android:id="@+id/button_previous"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_gravity="bottom|start"
-            android:text="previous" />
-
+            android:layout_weight="1"
+            android:background="@color/colorBlack"
+            android:drawableTop="@drawable/ic_arrow_left_bold_circle_outline_white_24dp"
+            android:text="@string/previous"
+            android:textColor="@color/colorWhite"
+            android:textSize="10sp" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/button_play"
@@ -48,8 +79,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:src="@drawable/ic_play_arrow_white_24dp"
-            app:borderWidth="0dp"
-            app:backgroundTint="@android:color/transparent" />
+            app:backgroundTint="@android:color/transparent"
+            app:borderWidth="0dp" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/button_stop"
@@ -57,17 +88,21 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:src="@drawable/ic_stop_white_24dp"
-            app:borderWidth="0dp"
             app:backgroundTint="@android:color/transparent"
-            />
+            app:borderWidth="0dp" />
 
         <Button
             android:id="@+id/button_next"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
+            android:layout_gravity="bottom|start"
             android:layout_weight="1"
-            android:text="next" />
+            android:background="@color/colorBlack"
+            android:drawableTop="@drawable/ic_arrow_right_bold_circle_outline_white_24dp"
+            android:text="@string/next"
+            android:textColor="@color/colorWhite"
+            android:textSize="10sp" />
+
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
